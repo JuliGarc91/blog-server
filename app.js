@@ -10,6 +10,9 @@ const app = express()
 // MIDDLEWARE
 app.use(cors())
 
+const multer = require('multer'); // used for file uploads
+const upload = multer(); // In-memory storage for file uploads
+
 app.use((req, _res, next) => {
   console.log('Origin Requested:', req.headers.origin)
   next()
