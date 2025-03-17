@@ -32,5 +32,18 @@ app.get('*', (_req, res) => {
   res.status(404).send('Page not found')
 })
 
+// Route to upload an image to Cloudinary
+app.post('/upload', upload.single('file'), async (req, res) => {
+  try {
+    const result = await cloudinary.uploader.upload(req.file.buffer, {
+      folder: 'memorial-images', // specify the folder in Cloudinary
+    });
+    res.json(result); // Send back the URL or result of the upload
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error uploading image');
+  }
+});
+
 // EXPORT
 module.exports = app
