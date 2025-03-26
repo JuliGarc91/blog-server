@@ -1,11 +1,19 @@
 // DEPENDENCIES
 const cors = require('cors')
 const express = require('express')
+const cloudinary = require('cloudinary').v2;
 
 const authController = require('./controllers/authController')
 
 // CONFIGURATION
 const app = express()
+
+// Configure Cloudinary with environment variables
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 // MIDDLEWARE
 app.use(cors())
@@ -26,6 +34,8 @@ app.use('/api/auth', authController)
 app.get('/', (_req, res) => {
   res.send('Welcome to Firebase Backend Server')
 })
+
+
 
 // 404 PAGE
 app.get('*', (_req, res) => {
